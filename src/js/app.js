@@ -1,4 +1,4 @@
-allert("Hi users , welcome to the ultimate pokedex built with love by "SOURAV", enjoy you time ...")
+allert("Hi users , welcome to the ultimate pokedex built with love by SOURAV, enjoy you time ...")
 import { db } from './database.js';
 import { syncBasicPokemonList, getPokemonDetail, getTypeMatchups } from './pokeapi.js';
 
