@@ -1,0 +1,18 @@
+{
+  "name": "premium-pokedex",
+  "version": "1.0.0",
+  "description": "A premium, high-performance Pokemon Pokedex from Generation 1 to 9.",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "fetch-data": "node scripts/fetch_data.js",
+    "start": "npx http-server . -p 3000 -o"
+  },
+  "keywords": [
+    "pokedex",
+    "pokemon",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "ISC"
+}

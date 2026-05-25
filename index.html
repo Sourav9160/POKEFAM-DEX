@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Page Metadata -->
+  <title>Pokefam Dex</title>
+  <meta name="description" content="A premium, state-of-the-art National Pokédex covering all 1,025 Pokémon from Generation 1 to Generation 9 with statistics, evolution chains, cries, and side-by-side comparison mode.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23ff4a68'/%3E%3Ccircle cx='12' cy='12' r='3' fill='white' stroke='black' stroke-width='2'/%3E%3Cpath d='M2 12h20' stroke='black' stroke-width='2'/%3E%3C/svg%3E">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/animations.css">
+  <link rel="stylesheet" href="src/css/styles.css">
+  <link rel="stylesheet" href="src/css/components.css">
+</head>
+<body>
+
+  <!-- One-Time Database Sync Loader Overlay -->
+  <div id="syncOverlay" class="sync-overlay">
+    <div class="sync-box">
+      <div class="sync-pokeball"></div>
+      <h1 class="sync-title">Pokedex Syncing</h1>
+      <p class="sync-subtitle">Syncing regions...</p>
+      <div class="sync-progress-container">
+        <div id="syncProgressBar" class="sync-progress-bar"></div>
+      </div>
+      <div id="syncStatus" class="sync-status">Initializing Database...</div>
+      <div id="syncRegion" class="sync-region">Kanto Region</div>
+    </div>
+  </div>
+
+  <!-- Main App Layout -->
+  <div class="app-container">
+    
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <div class="pokeball-logo" id="headerLogo" title="Click to refresh Pokedex cache"></div>
+        <div>
+          <h1 class="logo-text">Pokédex Pro</h1>
+          <div class="logo-subtitle">National Dex (Gen 1-9)</div>
+        </div>
+      </div>
+      
+      <div class="header-controls">
+        <div class="dex-stats-badge">
+          Registered: <strong id="registeredCount">0</strong> / 1,025
+        </div>
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Light/Dark Theme">
+          <!-- Dark mode moon icon (default) -->
+          <svg id="moonIcon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.3 22h-.1c-5.5-.1-10-4.6-10-10.1C2.2 6.3 6.6 2 12.1 2h.2c.4 0 .8.3.8.7s-.3.8-.7.8h-.3c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.2 0 6.1-1.9 7.3-4.8.2-.4.6-.6 1-.5.4.1.7.4.7.8-.8 4.7-4.8 8-9.8 8zm4.3-11.8c-.4-.4-.3-1 .1-1.3 2.1-1.6 3.3-4.1 3.3-6.7 0-.4.3-.8.7-.8s.8.3.8.7c0 3.2-1.5 6.2-4.1 8.1-.4.3-1 .3-1.3-.1z"/>
+          </svg>
+          <!-- Light mode sun icon (hidden by default) -->
+          <svg id="sunIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dash Dashboard -->
+    <main class="main-content">
+      
+      <!-- Control Panel (Search, Filters, Sort) -->
+      <section class="control-panel" id="controlsPanel">
+        <div class="search-row">
+          <div class="input-wrapper">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by name, ID (e.g. 025 or Pikachu)...">
+          </div>
+          
+          <select id="sortBySelect" class="select-dropdown">
+            <option value="id-asc">Sort: Lowest ID First</option>
+            <option value="id-desc">Sort: Highest ID First</option>
+            <option value="name-asc">Sort: A - Z</option>
+            <option value="name-desc">Sort: Z - A</option>
+            <option value="bst-desc">Sort: Highest Base Stats</option>
+            <option value="bst-asc">Sort: Lowest Base Stats</option>
+          </select>
+
+          <select id="filterFavSelect" class="select-dropdown">
+            <option value="all">Display: All Pokémon</option>
+            <option value="fav">Display: Favorites Only</option>
+          </select>
+        </div>
+
+        <!-- Generation Filter Tabs -->
+        <div>
+          <h2 class="filter-label">Generations</h2>
+          <div class="tabs-container" id="genTabsContainer">
+            <button class="tab-btn active" data-gen="all">All</button>
+            <button class="tab-btn" data-gen="1">Gen I (Kanto)</button>
+            <button class="tab-btn" data-gen="2">Gen II (Johto)</button>
+            <button class="tab-btn" data-gen="3">Gen III (Hoenn)</button>
+            <button class="tab-btn" data-gen="4">Gen IV (Sinnoh)</button>
+            <button class="tab-btn" data-gen="5">Gen V (Unova)</button>
+            <button class="tab-btn" data-gen="6">Gen VI (Kalos)</button>
+            <button class="tab-btn" data-gen="7">Gen VII (Alola)</button>
+            <button class="tab-btn" data-gen="8">Gen VIII (Galar)</button>
+            <button class="tab-btn" data-gen="9">Gen IX (Paldea)</button>
+          </div>
+        </div>
+
+        <!-- Pokemon Types Grid Filter -->
+        <div>
+          <h2 class="filter-label">Filter by Type</h2>
+          <div class="type-grid" id="typeFiltersGrid">
+            <span class="type-pill type-normal" data-type="normal">Normal</span>
+            <span class="type-pill type-fire" data-type="fire">Fire</span>
+            <span class="type-pill type-water" data-type="water">Water</span>
+            <span class="type-pill type-grass" data-type="grass">Grass</span>
+            <span class="type-pill type-electric" data-type="electric">Electric</span>
+            <span class="type-pill type-ice" data-type="ice">Ice</span>
+            <span class="type-pill type-fighting" data-type="fighting">Fighting</span>
+            <span class="type-pill type-poison" data-type="poison">Poison</span>
+            <span class="type-pill type-ground" data-type="ground">Ground</span>
+            <span class="type-pill type-flying" data-type="flying">Flying</span>
+            <span class="type-pill type-psychic" data-type="psychic">Psychic</span>
+            <span class="type-pill type-bug" data-type="bug">Bug</span>
+            <span class="type-pill type-rock" data-type="rock">Rock</span>
+            <span class="type-pill type-ghost" data-type="ghost">Ghost</span>
+            <span class="type-pill type-dragon" data-type="dragon">Dragon</span>
+            <span class="type-pill type-dark" data-type="dark">Dark</span>
+            <span class="type-pill type-steel" data-type="steel">Steel</span>
+            <span class="type-pill type-fairy" data-type="fairy">Fairy</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Cards Grid View -->
+      <section class="cards-grid" id="pokemonGrid">
+        <!-- Rendered dynamically by app.js -->
+        <!-- Skeletons will show initially if loading -->
+      </section>
+      
+      <!-- Infinite Scroll Trigger / Loading Indicator -->
+      <div id="gridSentinel" style="height: 10px; width: 100%;"></div>
+
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Data provided by the <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI Project</a>. Images &copy; Nintendo/Game Freak.</p>
+      <p>Created as a premium client-side Pokedex Pro. Offline-capable using local IndexedDB caching.</p>
+    </footer>
+
+  </div>
+
+  <!-- Compare Mode Floating Drawer Panel -->
+  <div id="compareDrawer" class="compare-drawer">
+    <div class="compare-slots" id="compareSlots">
+      <div class="compare-slot" id="slot-0"></div>
+      <div class="compare-slot" id="slot-1"></div>
+      <div class="compare-slot" id="slot-2"></div>
+    </div>
+    <div class="compare-drawer-actions">
+      <button id="clearCompareBtn" class="clear-compare-btn">Clear All</button>
+      <button id="compareBtn" class="compare-btn" disabled>Compare Pokémon (0/3)</button>
+    </div>
+  </div>
+
+  <!-- Pokemon Detail Overlay Modal -->
+  <div id="detailModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="closeDetailModal" aria-label="Close details">&times;</button>
+      
+      <div class="modal-header" id="modalHeader">
+        <div class="modal-header-bg" id="modalHeaderBg"></div>
+        <div class="modal-header-content">
+          <span class="modal-id" id="modalPokemonId">#0001</span>
+          <h2 class="modal-title" id="modalPokemonName">Bulbasaur</h2>
+          <div class="modal-genus" id="modalPokemonGenus">Seed Pokémon</div>
+          
+          <div class="modal-interactive-row">
+            <button class="shiny-toggle" id="shinyToggleBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.4 7.3 7.6.7-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6-5.5-5.4 7.6-.7z"/>
+              </svg>
+              Shiny Version
+            </button>
+            <button class="cry-btn" id="cryBtn">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+              Play Cry
+            </button>
+          </div>
+
+          <div class="modal-art-wrapper">
+            <div class="shiny-sparkles">
+              <span class="sparkle-icon sparkle-1">✦</span>
+              <span class="sparkle-icon sparkle-2">✦</span>
+              <span class="sparkle-icon sparkle-3">✦</span>
+            </div>
+            <img id="modalPokemonImg" src="" alt="Pokemon Artwork">
+          </div>
+          
+          <div class="card-types" id="modalPokemonTypes">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <!-- Navigation Tabs -->
+        <div class="modal-tabs">
+          <div class="modal-tab-header active" data-tab="tab-stats">Base Stats</div>
+          <div class="modal-tab-header" data-tab="tab-bio">Biology & Entries</div>
+          <div class="modal-tab-header" data-tab="tab-evolutions">Evolutions</div>
+        </div>
+
+        <!-- Tab contents -->
+        <div class="modal-tab-contents">
+          
+          <!-- Tab 1: Base Stats & Combat Properties -->
+          <div class="modal-tab-pane active" id="tab-stats">
+            <div class="stats-container" id="modalStatsContainer">
+              <!-- Rendered Dynamically -->
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+              <h3 class="filter-label" style="margin-bottom: 12px;">Type Matchups (Defensive Vulnerabilities)</h3>
+              <div class="matchup-grid" id="modalTypeMatchups">
+                <!-- Rendered Dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Bio & Description Entries -->
+          <div class="modal-tab-pane" id="tab-bio">
+            <div class="bio-grid">
+              <div class="bio-card">
+                <div class="bio-title">Height</div>
+                <div class="bio-val" id="bioHeight">0.7 m</div>
+              </div>
+              <div class="bio-card">
+                <div class="bio-title">Weight</div>
+                <div class="bio-val" id="bioWeight">6.9 kg</div>
+              </div>
+              <div class="bio-card">
+                <div class="bio-title">Egg Groups</div>
+                <div class="bio-val" id="bioEggGroups">Monster, Grass</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="filter-label" style="margin-bottom: 10px;">Pokedex Explanations</h3>
+              <div class="flavor-slider" id="modalFlavorText">
+                "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon."
+                <span class="flavor-version" id="modalFlavorVersion">Version red</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="filter-label" style="margin-bottom: 10px;">Abilities</h3>
+              <div class="abilities-list" id="modalAbilitiesList">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Evolutions Timeline -->
+          <div class="modal-tab-pane" id="tab-evolutions">
+            <h3 class="filter-label" style="margin-bottom: 12px; text-align: center;">Evolutionary Timeline</h3>
+            <div class="evolution-chain-container" id="modalEvolutionChain">
+              <!-- Rendered Dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pokémon Comparison Modal Overlay -->
+  <div id="compareModal" class="modal-overlay">
+    <div class="modal-content compare-modal-content">
+      <button class="modal-close-btn" id="closeCompareModal" aria-label="Close comparison">&times;</button>
+      
+      <div class="modal-header" style="border-bottom: none; padding-bottom: 0.5rem;">
+        <h2 class="modal-title">Pokémon Comparison</h2>
+        <div class="modal-genus" style="color: var(--text-secondary)">Side-by-Side Analysis</div>
+      </div>
+
+      <div class="modal-body" style="padding-top: 1rem;">
+        <div class="compare-grid" id="compareGridContent">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio element for cry playing -->
+  <audio id="cryAudioPlayer" style="display: none;"></audio>
+
+  <!-- Core Javascript -->
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>

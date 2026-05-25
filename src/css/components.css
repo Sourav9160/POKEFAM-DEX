@@ -1,0 +1,1206 @@
+/* Dashboard Control Panel */
+.control-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  backdrop-filter: blur(var(--glass-blur));
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .search-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 12px 12px 42px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  background: var(--bg-secondary);
+}
+
+.select-dropdown {
+  padding: 12px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  transition: all var(--transition-fast);
+}
+
+.select-dropdown:focus {
+  border-color: var(--accent-color);
+}
+
+/* Generation Selection Tabs */
+.filter-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+  background: var(--glass-border-hover);
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  background: var(--accent-color);
+  color: #ffffff;
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Pokemon Type Badge Selection */
+.type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Shared Type Pill Style */
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition-fast);
+}
+
+/* Inject type HSL colors dynamically */
+.type-pill.type-normal { background: hsla(var(--type-normal-h), var(--type-normal-s), var(--type-normal-l), 0.12); color: hsl(var(--type-normal-h), var(--type-normal-s), calc(var(--type-normal-l) - 5%)); border-color: hsla(var(--type-normal-h), var(--type-normal-s), var(--type-normal-l), 0.25); }
+.type-pill.type-fire { background: hsla(var(--type-fire-h), var(--type-fire-s), var(--type-fire-l), 0.12); color: hsl(var(--type-fire-h), var(--type-fire-s), calc(var(--type-fire-l) - 5%)); border-color: hsla(var(--type-fire-h), var(--type-fire-s), var(--type-fire-l), 0.25); }
+.type-pill.type-water { background: hsla(var(--type-water-h), var(--type-water-s), var(--type-water-l), 0.12); color: hsl(var(--type-water-h), var(--type-water-s), calc(var(--type-water-l) - 5%)); border-color: hsla(var(--type-water-h), var(--type-water-s), var(--type-water-l), 0.25); }
+.type-pill.type-grass { background: hsla(var(--type-grass-h), var(--type-grass-s), var(--type-grass-l), 0.12); color: hsl(var(--type-grass-h), var(--type-grass-s), calc(var(--type-grass-l) - 5%)); border-color: hsla(var(--type-grass-h), var(--type-grass-s), var(--type-grass-l), 0.25); }
+.type-pill.type-electric { background: hsla(var(--type-electric-h), var(--type-electric-s), var(--type-electric-l), 0.12); color: hsl(var(--type-electric-h), var(--type-electric-s), calc(var(--type-electric-l) - 5%)); border-color: hsla(var(--type-electric-h), var(--type-electric-s), var(--type-electric-l), 0.25); }
+.type-pill.type-ice { background: hsla(var(--type-ice-h), var(--type-ice-s), var(--type-ice-l), 0.12); color: hsl(var(--type-ice-h), var(--type-ice-s), calc(var(--type-ice-l) - 5%)); border-color: hsla(var(--type-ice-h), var(--type-ice-s), var(--type-ice-l), 0.25); }
+.type-pill.type-fighting { background: hsla(var(--type-fighting-h), var(--type-fighting-s), var(--type-fighting-l), 0.12); color: hsl(var(--type-fighting-h), var(--type-fighting-s), calc(var(--type-fighting-l) + 10%)); border-color: hsla(var(--type-fighting-h), var(--type-fighting-s), var(--type-fighting-l), 0.25); }
+.type-pill.type-poison { background: hsla(var(--type-poison-h), var(--type-poison-s), var(--type-poison-l), 0.12); color: hsl(var(--type-poison-h), var(--type-poison-s), calc(var(--type-poison-l) + 10%)); border-color: hsla(var(--type-poison-h), var(--type-poison-s), var(--type-poison-l), 0.25); }
+.type-pill.type-ground { background: hsla(var(--type-ground-h), var(--type-ground-s), var(--type-ground-l), 0.12); color: hsl(var(--type-ground-h), var(--type-ground-s), calc(var(--type-ground-l) - 5%)); border-color: hsla(var(--type-ground-h), var(--type-ground-s), var(--type-ground-l), 0.25); }
+.type-pill.type-flying { background: hsla(var(--type-flying-h), var(--type-flying-s), var(--type-flying-l), 0.12); color: hsl(var(--type-flying-h), var(--type-flying-s), calc(var(--type-flying-l) - 10%)); border-color: hsla(var(--type-flying-h), var(--type-flying-s), var(--type-flying-l), 0.25); }
+.type-pill.type-psychic { background: hsla(var(--type-psychic-h), var(--type-psychic-s), var(--type-psychic-l), 0.12); color: hsl(var(--type-psychic-h), var(--type-psychic-s), calc(var(--type-psychic-l) - 5%)); border-color: hsla(var(--type-psychic-h), var(--type-psychic-s), var(--type-psychic-l), 0.25); }
+.type-pill.type-bug { background: hsla(var(--type-bug-h), var(--type-bug-s), var(--type-bug-l), 0.12); color: hsl(var(--type-bug-h), var(--type-bug-s), calc(var(--type-bug-l) + 15%)); border-color: hsla(var(--type-bug-h), var(--type-bug-s), var(--type-bug-l), 0.25); }
+.type-pill.type-rock { background: hsla(var(--type-rock-h), var(--type-rock-s), var(--type-rock-l), 0.12); color: hsl(var(--type-rock-h), var(--type-rock-s), calc(var(--type-rock-l) + 10%)); border-color: hsla(var(--type-rock-h), var(--type-rock-s), var(--type-rock-l), 0.25); }
+.type-pill.type-ghost { background: hsla(var(--type-ghost-h), var(--type-ghost-s), var(--type-ghost-l), 0.12); color: hsl(var(--type-ghost-h), var(--type-ghost-s), calc(var(--type-ghost-l) + 15%)); border-color: hsla(var(--type-ghost-h), var(--type-ghost-s), var(--type-ghost-l), 0.25); }
+.type-pill.type-dragon { background: hsla(var(--type-dragon-h), var(--type-dragon-s), var(--type-dragon-l), 0.12); color: hsl(var(--type-dragon-h), var(--type-dragon-s), calc(var(--type-dragon-l) - 5%)); border-color: hsla(var(--type-dragon-h), var(--type-dragon-s), var(--type-dragon-l), 0.25); }
+.type-pill.type-dark { background: hsla(var(--type-dark-h), var(--type-dark-s), var(--type-dark-l), 0.12); color: hsl(var(--type-dark-h), var(--type-dark-s), calc(var(--type-dark-l) + 20%)); border-color: hsla(var(--type-dark-h), var(--type-dark-s), var(--type-dark-l), 0.25); }
+.type-pill.type-steel { background: hsla(var(--type-steel-h), var(--type-steel-s), var(--type-steel-l), 0.12); color: hsl(var(--type-steel-h), var(--type-steel-s), calc(var(--type-steel-l) - 5%)); border-color: hsla(var(--type-steel-h), var(--type-steel-s), var(--type-steel-l), 0.25); }
+.type-pill.type-fairy { background: hsla(var(--type-fairy-h), var(--type-fairy-s), var(--type-fairy-l), 0.12); color: hsl(var(--type-fairy-h), var(--type-fairy-s), calc(var(--type-fairy-l) - 5%)); border-color: hsla(var(--type-fairy-h), var(--type-fairy-s), var(--type-fairy-l), 0.25); }
+
+/* Selected Type Pills on Filter Panel */
+.type-pill.filter-active.type-normal { background: hsl(var(--type-normal-h), var(--type-normal-s), var(--type-normal-l)); color: #fff; }
+.type-pill.filter-active.type-fire { background: hsl(var(--type-fire-h), var(--type-fire-s), var(--type-fire-l)); color: #fff; }
+.type-pill.filter-active.type-water { background: hsl(var(--type-water-h), var(--type-water-s), var(--type-water-l)); color: #fff; }
+.type-pill.filter-active.type-grass { background: hsl(var(--type-grass-h), var(--type-grass-s), var(--type-grass-l)); color: #fff; }
+.type-pill.filter-active.type-electric { background: hsl(var(--type-electric-h), var(--type-electric-s), var(--type-electric-l)); color: #000; }
+.type-pill.filter-active.type-ice { background: hsl(var(--type-ice-h), var(--type-ice-s), var(--type-ice-l)); color: #000; }
+.type-pill.filter-active.type-fighting { background: hsl(var(--type-fighting-h), var(--type-fighting-s), var(--type-fighting-l)); color: #fff; }
+.type-pill.filter-active.type-poison { background: hsl(var(--type-poison-h), var(--type-poison-s), var(--type-poison-l)); color: #fff; }
+.type-pill.filter-active.type-ground { background: hsl(var(--type-ground-h), var(--type-ground-s), var(--type-ground-l)); color: #fff; }
+.type-pill.filter-active.type-flying { background: hsl(var(--type-flying-h), var(--type-flying-s), var(--type-flying-l)); color: #000; }
+.type-pill.filter-active.type-psychic { background: hsl(var(--type-psychic-h), var(--type-psychic-s), var(--type-psychic-l)); color: #fff; }
+.type-pill.filter-active.type-bug { background: hsl(var(--type-bug-h), var(--type-bug-s), var(--type-bug-l)); color: #fff; }
+.type-pill.filter-active.type-rock { background: hsl(var(--type-rock-h), var(--type-rock-s), var(--type-rock-l)); color: #fff; }
+.type-pill.filter-active.type-ghost { background: hsl(var(--type-ghost-h), var(--type-ghost-s), var(--type-ghost-l)); color: #fff; }
+.type-pill.filter-active.type-dragon { background: hsl(var(--type-dragon-h), var(--type-dragon-s), var(--type-dragon-l)); color: #fff; }
+.type-pill.filter-active.type-dark { background: hsl(var(--type-dark-h), var(--type-dark-s), var(--type-dark-l)); color: #fff; }
+.type-pill.filter-active.type-steel { background: hsl(var(--type-steel-h), var(--type-steel-s), var(--type-steel-l)); color: #fff; }
+.type-pill.filter-active.type-fairy { background: hsl(var(--type-fairy-h), var(--type-fairy-s), var(--type-fairy-l)); color: #000; }
+
+.type-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Pokemon Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.pokemon-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  backdrop-filter: blur(var(--glass-blur));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  text-decoration: none;
+  color: inherit;
+  
+  /* GPU & Scrolling Optimizations for 120Hz */
+  content-visibility: auto;
+  contain-intrinsic-size: 280px;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Dynamic glow effect based on primary type */
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--border-radius-md);
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: all var(--transition-normal);
+}
+
+.pokemon-card:hover {
+  transform: translateY(-8px);
+  border-color: transparent;
+}
+
+/* Apply specific type glows on hover */
+.pokemon-card.glow-normal:hover { box-shadow: 0 12px 30px hsla(var(--type-normal-h), var(--type-normal-s), var(--type-normal-l), 0.3); }
+.pokemon-card.glow-fire:hover { box-shadow: 0 12px 30px hsla(var(--type-fire-h), var(--type-fire-s), var(--type-fire-l), 0.35); }
+.pokemon-card.glow-water:hover { box-shadow: 0 12px 30px hsla(var(--type-water-h), var(--type-water-s), var(--type-water-l), 0.35); }
+.pokemon-card.glow-grass:hover { box-shadow: 0 12px 30px hsla(var(--type-grass-h), var(--type-grass-s), var(--type-grass-l), 0.35); }
+.pokemon-card.glow-electric:hover { box-shadow: 0 12px 30px hsla(var(--type-electric-h), var(--type-electric-s), var(--type-electric-l), 0.35); }
+.pokemon-card.glow-ice:hover { box-shadow: 0 12px 30px hsla(var(--type-ice-h), var(--type-ice-s), var(--type-ice-l), 0.35); }
+.pokemon-card.glow-fighting:hover { box-shadow: 0 12px 30px hsla(var(--type-fighting-h), var(--type-fighting-s), var(--type-fighting-l), 0.35); }
+.pokemon-card.glow-poison:hover { box-shadow: 0 12px 30px hsla(var(--type-poison-h), var(--type-poison-s), var(--type-poison-l), 0.35); }
+.pokemon-card.glow-ground:hover { box-shadow: 0 12px 30px hsla(var(--type-ground-h), var(--type-ground-s), var(--type-ground-l), 0.35); }
+.pokemon-card.glow-flying:hover { box-shadow: 0 12px 30px hsla(var(--type-flying-h), var(--type-flying-s), var(--type-flying-l), 0.35); }
+.pokemon-card.glow-psychic:hover { box-shadow: 0 12px 30px hsla(var(--type-psychic-h), var(--type-psychic-s), var(--type-psychic-l), 0.35); }
+.pokemon-card.glow-bug:hover { box-shadow: 0 12px 30px hsla(var(--type-bug-h), var(--type-bug-s), var(--type-bug-l), 0.35); }
+.pokemon-card.glow-rock:hover { box-shadow: 0 12px 30px hsla(var(--type-rock-h), var(--type-rock-s), var(--type-rock-l), 0.35); }
+.pokemon-card.glow-ghost:hover { box-shadow: 0 12px 30px hsla(var(--type-ghost-h), var(--type-ghost-s), var(--type-ghost-l), 0.35); }
+.pokemon-card.glow-dragon:hover { box-shadow: 0 12px 30px hsla(var(--type-dragon-h), var(--type-dragon-s), var(--type-dragon-l), 0.35); }
+.pokemon-card.glow-dark:hover { box-shadow: 0 12px 30px hsla(var(--type-dark-h), var(--type-dark-s), var(--type-dark-l), 0.35); }
+.pokemon-card.glow-steel:hover { box-shadow: 0 12px 30px hsla(var(--type-steel-h), var(--type-steel-s), var(--type-steel-l), 0.35); }
+.pokemon-card.glow-fairy:hover { box-shadow: 0 12px 30px hsla(var(--type-fairy-h), var(--type-fairy-s), var(--type-fairy-l), 0.35); }
+
+.pokemon-card.glow-normal::before { border-color: hsla(var(--type-normal-h), var(--type-normal-s), var(--type-normal-l), 0.4); }
+.pokemon-card.glow-fire::before { border-color: hsla(var(--type-fire-h), var(--type-fire-s), var(--type-fire-l), 0.45); }
+.pokemon-card.glow-water::before { border-color: hsla(var(--type-water-h), var(--type-water-s), var(--type-water-l), 0.45); }
+.pokemon-card.glow-grass::before { border-color: hsla(var(--type-grass-h), var(--type-grass-s), var(--type-grass-l), 0.45); }
+.pokemon-card.glow-electric::before { border-color: hsla(var(--type-electric-h), var(--type-electric-s), var(--type-electric-l), 0.45); }
+.pokemon-card.glow-ice::before { border-color: hsla(var(--type-ice-h), var(--type-ice-s), var(--type-ice-l), 0.45); }
+.pokemon-card.glow-fighting::before { border-color: hsla(var(--type-fighting-h), var(--type-fighting-s), var(--type-fighting-l), 0.45); }
+.pokemon-card.glow-poison::before { border-color: hsla(var(--type-poison-h), var(--type-poison-s), var(--type-poison-l), 0.45); }
+.pokemon-card.glow-ground::before { border-color: hsla(var(--type-ground-h), var(--type-ground-s), var(--type-ground-l), 0.45); }
+.pokemon-card.glow-flying::before { border-color: hsla(var(--type-flying-h), var(--type-flying-s), var(--type-flying-l), 0.45); }
+.pokemon-card.glow-psychic::before { border-color: hsla(var(--type-psychic-h), var(--type-psychic-s), var(--type-psychic-l), 0.45); }
+.pokemon-card.glow-bug::before { border-color: hsla(var(--type-bug-h), var(--type-bug-s), var(--type-bug-l), 0.45); }
+.pokemon-card.glow-rock::before { border-color: hsla(var(--type-rock-h), var(--type-rock-s), var(--type-rock-l), 0.45); }
+.pokemon-card.glow-ghost::before { border-color: hsla(var(--type-ghost-h), var(--type-ghost-s), var(--type-ghost-l), 0.45); }
+.pokemon-card.glow-dragon::before { border-color: hsla(var(--type-dragon-h), var(--type-dragon-s), var(--type-dragon-l), 0.45); }
+.pokemon-card.glow-dark::before { border-color: hsla(var(--type-dark-h), var(--type-dark-s), var(--type-dark-l), 0.45); }
+.pokemon-card.glow-steel::before { border-color: hsla(var(--type-steel-h), var(--type-steel-s), var(--type-steel-l), 0.45); }
+.pokemon-card.glow-fairy::before { border-color: hsla(var(--type-fairy-h), var(--type-fairy-s), var(--type-fairy-l), 0.45); }
+
+/* Favorite Button on Cards */
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  z-index: 10;
+  outline: none;
+}
+
+.fav-btn:hover {
+  transform: scale(1.2);
+  color: var(--accent-color);
+}
+
+.fav-btn.active {
+  color: var(--accent-color);
+}
+
+.fav-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Compare Toggle Button on Cards */
+.compare-toggle-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.pokemon-card:hover .compare-toggle-btn {
+  opacity: 1;
+}
+
+.compare-toggle-btn.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* Card Artwork Frame */
+.card-id {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-top: 0.5rem;
+}
+
+.card-img-wrapper {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));
+  transition: transform var(--transition-normal), filter var(--transition-normal);
+}
+
+.pokemon-card:hover .card-img-wrapper img {
+  transform: scale(1.15) translateY(-4px);
+  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.25));
+}
+
+.card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: -0.2px;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.card-types {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0.75rem;
+}
+
+/* Pokemon mini stats in card */
+.card-stats-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  font-size: 0.7rem;
+  gap: 4px;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 8px;
+  color: var(--text-secondary);
+}
+
+.card-stat-item strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+
+/* Loading Skeletons */
+.card-skeleton {
+  height: 280px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--glass-border);
+}
+
+/* Detail Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 7, 12, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+  padding: 1.5rem;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  border: 1px solid var(--glass-border);
+  width: 100%;
+  max-width: 820px;
+  max-height: 90vh;
+  border-radius: var(--border-radius-lg);
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.1);
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* Modal UI Sections */
+.modal-header {
+  padding: 2.5rem 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Background Type Deco */
+.modal-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.modal-header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.modal-id {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.modal-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  margin-top: 4px;
+}
+
+.modal-genus {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.modal-interactive-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+/* Shiny toggle */
+.shiny-toggle {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.shiny-toggle:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--glass-border-hover);
+}
+
+.shiny-toggle.active {
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #000;
+  border-color: #ffd700;
+}
+
+/* Cry Button */
+.cry-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.cry-btn:hover {
+  background: var(--bg-tertiary);
+}
+
+.cry-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.modal-art-wrapper {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.modal-art-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+/* Sparkle element for shiny mode */
+.shiny-sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  display: none;
+  z-index: 2;
+}
+
+.shiny-toggle.active + .modal-art-wrapper .shiny-sparkles {
+  display: block;
+}
+
+.sparkle-icon {
+  position: absolute;
+  color: #ffd700;
+  font-size: 20px;
+  animation: sparkle 1.5s infinite ease-in-out;
+}
+
+.sparkle-1 { top: 15%; left: 15%; animation-delay: 0s; }
+.sparkle-2 { top: 75%; left: 80%; animation-delay: 0.4s; }
+.sparkle-3 { top: 25%; left: 85%; animation-delay: 0.8s; }
+
+/* Modal Body */
+.modal-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Tabs inside Modal */
+.modal-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--bg-tertiary);
+  gap: 24px;
+}
+
+.modal-tab-header {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding-bottom: 10px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.modal-tab-header.active {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.modal-tab-pane {
+  display: none;
+}
+
+.modal-tab-pane.active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Stats Component */
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 120px 45px 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.stat-val {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.stat-bar-outer {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.stat-bar-inner {
+  height: 100%;
+  width: 0;
+  border-radius: var(--border-radius-full);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Type based stat bar coloring or general status colors */
+.stat-bar-inner.hp { background: #ff4a5a; }
+.stat-bar-inner.attack { background: #ff983f; }
+.stat-bar-inner.defense { background: #ffdb53; }
+.stat-bar-inner.spatk { background: #57c7ff; }
+.stat-bar-inner.spdef { background: #73f27a; }
+.stat-bar-inner.speed { background: #fb72ff; }
+
+/* Bio / Physics Attributes */
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  text-align: center;
+}
+
+.bio-card {
+  background: var(--bg-tertiary);
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--glass-border);
+}
+
+.bio-title {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.bio-val {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Flavor entries text slider */
+.flavor-slider {
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--accent-color);
+  padding: 1.25rem;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.flavor-version {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-top: 8px;
+  font-style: normal;
+}
+
+/* Abilities area */
+.abilities-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .abilities-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ability-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+}
+
+.ability-name {
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ability-hidden-badge {
+  background: rgba(255, 74, 104, 0.15);
+  color: var(--accent-color);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Type matchups defensive grid */
+.matchup-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.matchup-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  border: 1px solid var(--glass-border);
+}
+
+.matchup-badge strong {
+  font-weight: 800;
+}
+
+.matchup-multiplier.weak { color: #ff4a5a; }
+.matchup-multiplier.resist { color: #73f27a; }
+.matchup-multiplier.immune { color: #9ca3af; }
+
+/* Evolution Chain Visualizer */
+.evolution-chain-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.evolution-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.evolution-node:hover {
+  transform: translateY(-4px);
+}
+
+.evolution-node-img {
+  width: 90px;
+  height: 90px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast);
+}
+
+.evolution-node:hover .evolution-node-img {
+  border-color: var(--accent-color);
+}
+
+.evolution-node-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.evolution-node-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin-top: 6px;
+}
+
+.evolution-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.evolution-trigger {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  max-width: 80px;
+  text-align: center;
+}
+
+.evolution-arrow svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Compare Mode Floating Drawer */
+.compare-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--compare-drawer-bg);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(var(--glass-blur));
+  z-index: 90;
+  padding: 1rem 2rem;
+  transform: translateY(100%);
+  transition: transform var(--transition-slow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.compare-drawer.active {
+  transform: translateY(0);
+}
+
+.compare-slots {
+  display: flex;
+  gap: 16px;
+}
+
+.compare-slot {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--border-radius-md);
+  border: 2px dashed var(--glass-border-hover);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.compare-slot-filled {
+  border-style: solid;
+  border-color: var(--accent-color);
+}
+
+.compare-slot img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
+
+.remove-compare-slot {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.compare-drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.compare-btn {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-glow);
+}
+
+.compare-btn:hover {
+  background: var(--accent-secondary);
+  transform: scale(1.02);
+}
+
+.compare-btn:disabled {
+  background: var(--text-muted);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.clear-compare-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 10px 16px;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.clear-compare-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Compare Detail Modal Overlay */
+.compare-modal-content {
+  max-width: 960px;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 200px repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+  .compare-row-header {
+    display: none;
+  }
+}
+
+.compare-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+}
+
+.compare-col-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.compare-col-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.compare-stats-table {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.compare-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 0.9rem;
+}
+
+.compare-stat-row strong {
+  font-size: 1rem;
+}
+
+.winner-highlight {
+  color: var(--accent-color);
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* One-Time Sync Loader Screen Overlay */
+.sync-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #060913;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 1;
+  transition: opacity var(--transition-slow);
+}
+
+.sync-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sync-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.sync-pokeball {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(to bottom, #ff3356 45%, #ffffff 55%);
+  border-radius: 50%;
+  border: 8px solid #000;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(255, 51, 86, 0.4);
+  animation: rotate 1.5s infinite linear;
+}
+
+.sync-pokeball::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: #000;
+  transform: translateY(-50%);
+}
+
+.sync-pokeball::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border: 8px solid #000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sync-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.sync-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.sync-progress-container {
+  width: 100%;
+  height: 6px;
+  background: #172036;
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.sync-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #ff3356;
+  border-radius: var(--border-radius-full);
+  box-shadow: 0 0 10px rgba(255, 51, 86, 0.8);
+  transition: width 0.3s ease;
+}
+
+.sync-status {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  margin-top: 5px;
+}
+
+.sync-region {
+  font-size: 0.75rem;
+  color: #ff3356;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
