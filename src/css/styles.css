@@ -77,7 +77,7 @@ body {
 .pokeball-logo {
   width: 44px;
   height: 44px;
-  background-image: url('../assets/pokedex_logo.png');
+  background-image: url('https://user-images.githubusercontent.com/9741252/81717987-83b84000-947b-11ea-9ac9-5ad1d59adf7a.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
